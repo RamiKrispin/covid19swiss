@@ -11,6 +11,7 @@ command <- 'curl "https://api.github.com/repos/openZH/covid_19/contents/fallzahl
 files_list <- system(command = command, intern = TRUE)
 #-------------- Pulling the raw data --------------
 df_raw <- lapply(files_list, function(i){
+  print(files_list)
   df <- read.csv(paste("https://raw.githubusercontent.com/openZH/covid_19/master/fallzahlen_kanton_total_csv/", gsub('"', '', i), sep = ""))
   return(df)
 }) %>% dplyr::bind_rows()
