@@ -18,7 +18,7 @@ df_raw <- lapply(files_list, function(i){
 #-------------- Cleaning the data --------------
 head(df_raw)
 
-swiss_canton <- df_raw %>%
+covid19swiss <- df_raw %>%
   dplyr::mutate(date = as.Date(date),
                 canton = abbreviation_canton_and_fl) %>%
   dplyr::group_by(date, canton) %>%
@@ -32,6 +32,6 @@ swiss_canton <- df_raw %>%
   tidyr::pivot_longer(c(-date, - canton),
                       names_to = "type",
                       values_to = "cases")
-head(swiss_canton)
+head(covid19swiss)
 
-usethis::use_data(swiss_canton, overwrite = TRUE)
+usethis::use_data(covid19swiss, overwrite = TRUE)
