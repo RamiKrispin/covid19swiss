@@ -36,3 +36,6 @@ covid19swiss <- df_raw %>%
 head(covid19swiss)
 
 usethis::use_data(covid19swiss, overwrite = TRUE)
+
+write.csv(covid19swiss, "csv/covid19swiss.csv", row.names = FALSE)
+
