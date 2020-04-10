@@ -19,22 +19,29 @@ daily summary of the Coronavirus (COVID-19) pandemic cases in Switzerland by Can
 \details{
 The dataset contains the daily summary of the Coronavirus pandemic cases in Switzerland. The data includes the following fields:
 
-* `date` - the timestamp of the case, a `Date` object
-* `canton` - the canton abbreviation
-* `type` - the type of case
-* `cases` - the number of cases corresponding to the date and case type fields
+date - the timestamp of the case, a Date object
+canton - the canton abbreviation
+type - the type of case
+cases - the number of cases corresponding to the date and case type fields
 
 
-Where the available `type` field includes the following cases:
+Where the available type field includes the following cases:
 
-* `total_tested` - number of tests performed as of the date
-* `total_confirmed` - number of positive cases as of the date
-* `new_hosp` - new hospitalizations with respect to the previously reported date
-* `current_hosp` - number of hospitalized patients as of the current date
-* `current_icu` - number of hospitalized patients in ICUs as of the current date
-* `current_vent` - number of hospitalized patients requiring ventilation as of the current date
-* `total_recovered` - total number of patients recovered as of the current date
-* `total_death` - total number of death as of the current date
+total_tested - number of tests performed as of the date
+
+total_confirmed - number of positive cases as of the date
+
+new_hosp - new hospitalizations with respect to the previously reported date
+
+current_hosp - number of hospitalized patients as of the current date
+
+current_icu - number of hospitalized patients in ICUs as of the current date
+
+current_vent - number of hospitalized patients requiring ventilation as of the current date
+
+total_recovered - total number of patients recovered as of the current date
+
+total_death - total number of death as of the current date
 }
 \examples{
 
