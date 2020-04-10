@@ -32,7 +32,8 @@ covid19swiss <- df_raw %>%
                    total_death = sum(ncumul_deceased, na.rm = TRUE)) %>%
   tidyr::pivot_longer(c(-date, - canton),
                       names_to = "type",
-                      values_to = "cases")
+                      values_to = "cases") %>%
+  as.data.frame()
 head(covid19swiss)
 
 usethis::use_data(covid19swiss, overwrite = TRUE)
