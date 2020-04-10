@@ -9,8 +9,11 @@
 #' @details The dataset contains the daily summary of the Coronavirus pandemic cases in Switzerland. The data includes the following fields:
 #'
 #' date - the timestamp of the case, a Date object
+#'
 #' canton - the canton abbreviation
+#'
 #' type - the type of case
+#'
 #' cases - the number of cases corresponding to the date and case type fields
 #'
 #'
