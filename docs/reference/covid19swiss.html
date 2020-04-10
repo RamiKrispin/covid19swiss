@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • covid19swiss</title>
+<title>The 2019 Novel Coronavirus COVID-19 (2019-nCoV) Switzerland Outbreak Dataset — covid19swiss • covid19swiss</title>
 
 
 <!-- jquery -->
@@ -33,7 +33,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="The 2019 Novel Coronavirus COVID-19 (2019-nCoV) Switzerland Outbreak Dataset — covid19swiss" />
+<meta property="og:description" content="daily summary of the Coronavirus (COVID-19) pandemic cases in Switzerland by Canton" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -51,7 +53,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -97,42 +99,65 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>The 2019 Novel Coronavirus COVID-19 (2019-nCoV) Switzerland Outbreak Dataset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Covid19R/covid19swiss/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>covid19swiss.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>daily summary of the Coronavirus (COVID-19) pandemic cases in Switzerland by Canton</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='no'>covid19swiss</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="covid19swiss.html">covid19swiss</a></code> </p>
-        </td>
-        <td><p>The 2019 Novel Coronavirus COVID-19 (2019-nCoV) Switzerland Outbreak Dataset</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data.frame object</p>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Specialist Unit for Open Government Data Canton of Zurich <a href='http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html/'>website</a></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The dataset contains the daily summary of the Coronavirus pandemic cases in Switzerland. The data includes the following fields:</p>
+<p>date - the timestamp of the case, a Date object</p>
+<p>canton - the canton abbreviation</p>
+<p>type - the type of case</p>
+<p>cases - the number of cases corresponding to the date and case type fields</p>
+    <p>Where the available type field includes the following cases:</p>
+<p>total_tested - number of tests performed as of the date</p>
+<p>total_confirmed - number of positive cases as of the date</p>
+<p>new_hosp - new hospitalizations with respect to the previously reported date</p>
+<p>current_hosp - number of hospitalized patients as of the current date</p>
+<p>current_icu - number of hospitalized patients in ICUs as of the current date</p>
+<p>current_vent - number of hospitalized patients requiring ventilation as of the current date</p>
+<p>total_recovered - total number of patients recovered as of the current date</p>
+<p>total_death - total number of death as of the current date</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>covid19swiss</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>covid19swiss</span>)</div><div class='output co'>#&gt;         date canton            type cases
+#&gt; 1 2020-02-25     GE    total_tested    72
+#&gt; 2 2020-02-25     GE total_confirmed     0
+#&gt; 3 2020-02-25     GE        new_hosp     0
+#&gt; 4 2020-02-25     GE    current_hosp     0
+#&gt; 5 2020-02-25     GE     current_icu     0
+#&gt; 6 2020-02-25     GE    current_vent     0</div><div class='input'>
+</div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
