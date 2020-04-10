@@ -17,3 +17,4 @@ Suggests:
     dplyr (>= 0.8.5)
 URL: https://github.com/Covid19R/covid19swiss
 BugReports: https://github.com/Covid19R/covid19swiss/issues
+RoxygenNote: 7.1.0
