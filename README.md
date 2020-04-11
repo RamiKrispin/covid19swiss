@@ -23,6 +23,8 @@ cantons. The `covid19swiss` dataset includes the following fields:
   - `type` - the type of case
   - `cases` - the number of cases corresponding to the date and case
     type fields
+  - `gn_a1_code` - a canton index code for merging geometry data from
+    the **rnaturalearth** package
 
 Where the available `type` field includes the following cases:
 
@@ -81,13 +83,13 @@ Note: must restart the R session to have the updates available
 data(covid19swiss)
 
 head(covid19swiss)
-#>         date canton            type cases
-#> 1 2020-02-25     GE    total_tested    72
-#> 2 2020-02-25     GE total_confirmed     0
-#> 3 2020-02-25     GE        new_hosp     0
-#> 4 2020-02-25     GE    current_hosp     0
-#> 5 2020-02-25     GE     current_icu     0
-#> 6 2020-02-25     GE    current_vent     0
+#>         date canton            type cases gn_a1_code
+#> 1 2020-02-25     GE    total_tested    72      CH.GE
+#> 2 2020-02-25     GE total_confirmed     0      CH.GE
+#> 3 2020-02-25     GE        new_hosp     0      CH.GE
+#> 4 2020-02-25     GE    current_hosp     0      CH.GE
+#> 5 2020-02-25     GE     current_icu     0      CH.GE
+#> 6 2020-02-25     GE    current_vent     0      CH.GE
 ```
 
 ### Wide format
@@ -99,14 +101,13 @@ covid19swiss_wide <- covid19swiss %>%
   pivot_wider(names_from = type, values_from = cases)
 
 head(covid19swiss_wide)
-#> # A tibble: 6 x 10
-#> # Groups:   date [3]
-#>   date       canton total_tested total_confirmed new_hosp current_hosp current_icu current_vent total_recovered total_death
-#>   <date>     <chr>         <int>           <int>    <int>        <int>       <int>        <int>           <int>       <int>
-#> 1 2020-02-25 GE               72               0        0            0           0            0               0           0
-#> 2 2020-02-25 TI                0               1        0            0           0            0               0           0
-#> 3 2020-02-26 GE              178               1        0            1           0            0               0           0
-#> 4 2020-02-26 TI                0               0        0            0           0            0               0           0
-#> 5 2020-02-27 BS                0               1        0            0           0            0               0           0
-#> 6 2020-02-27 FL                3               0        0            0           0            0               0           0
+#> # A tibble: 6 x 11
+#>   date       canton gn_a1_code total_tested total_confirmed new_hosp current_hosp current_icu current_vent total_recovered total_death
+#>   <date>     <chr>  <chr>             <int>           <int>    <int>        <int>       <int>        <int>           <int>       <int>
+#> 1 2020-02-25 GE     CH.GE                72               0        0            0           0            0               0           0
+#> 2 2020-02-25 TI     CH.TI                 0               1        0            0           0            0               0           0
+#> 3 2020-02-26 GE     CH.GE               178               1        0            1           0            0               0           0
+#> 4 2020-02-26 TI     CH.TI                 0               0        0            0           0            0               0           0
+#> 5 2020-02-27 BS     CH.BS                 0               1        0            0           0            0               0           0
+#> 6 2020-02-27 FL     <NA>                  3               0        0            0           0            0               0           0
 ```
