@@ -66,15 +66,15 @@ devtools::install_github("Covid19R/covid19swiss")
 
 ## Data refresh
 
-The **covid19swiss** package dev version is been updated on a daily bases. The `update_data` function enables a simple refresh of the installed package datasets with the most updated version on Github:
+The **covid19swiss** package dev version is been updated on a daily bases. The `update_swiss_data` function enables a simple refresh of the installed package datasets with the most updated version on Github:
 
 ``` r
 library(covid19swiss)
 
-update_data()
+update_swiss_data()
 ```
 
-Note: must restart the R session to have the updates available
+**Note:** must restart the R session to have the updates available
 
 
 ## Usage
@@ -98,4 +98,12 @@ covid19swiss_wide <- covid19swiss %>%
 head(covid19swiss_wide)
 ```
 
+## Contributing
 
+Please submit [issues](https://github.com/Covid19R/covid19swiss/issues)
+and [pull requests](https://github.com/Covid19R/covid19swiss/pulls)
+with any package improvements\!
+
+Please note that the ‘covid19swiss’ project is released with a
+[Contributor Code of Conduct](https://github.com/Covid19R/covid19swiss/blob/master/CODE_OF_CONDUCT.md). By contributing to
+this project, you agree to abide by its terms.
