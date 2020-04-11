@@ -29,14 +29,14 @@ covid19swiss <- df_raw %>%
   dplyr::mutate(date = as.Date(date),
                 canton = abbreviation_canton_and_fl) %>%
   dplyr::group_by(date, canton) %>%
-  dplyr::summarise(total_tested = sum(ncumul_tested, na.rm = TRUE),
-                   total_confirmed = sum(ncumul_conf, na.rm = TRUE),
-                   new_hosp = sum(new_hosp, na.rm = TRUE),
-                   current_hosp = sum(current_hosp, na.rm = TRUE),
-                   current_icu = sum(current_icu, na.rm = TRUE),
-                   current_vent = sum(current_vent, na.rm = TRUE),
-                   total_recovered = sum(ncumul_released, na.rm = TRUE),
-                   total_death = sum(ncumul_deceased, na.rm = TRUE)) %>%
+  dplyr::summarise(total_tested = sum(ncumul_tested, na.rm = any(!is.na(ncumul_tested))),
+                   total_confirmed = sum(ncumul_conf, na.rm = any(!is.na(ncumul_conf))),
+                   new_hosp = sum(new_hosp, na.rm = any(!is.na(new_hosp))),
+                   current_hosp = sum(current_hosp, na.rm = any(!is.na(current_hosp))),
+                   current_icu = sum(current_icu, na.rm = any(!is.na(current_icu))),
+                   current_vent = sum(current_vent, na.rm = any(!is.na(current_vent))),
+                   total_recovered = sum(ncumul_released, na.rm = any(!is.na(ncumul_released))),
+                   total_death = sum(ncumul_deceased, na.rm = any(!is.na(ncumul_deceased)))) %>%
   tidyr::pivot_longer(c(-date, - canton),
                       names_to = "type",
                       values_to = "cases") %>%
