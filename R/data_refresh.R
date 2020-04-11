@@ -9,7 +9,7 @@
 #' update_swiss_data()
 #'
 #' }
-update_data <- function(){
+update_swiss_data <- function(){
   flag <- FALSE
 
   current <- covid19swiss::covid19swiss
