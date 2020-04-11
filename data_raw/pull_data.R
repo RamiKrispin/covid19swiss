@@ -9,9 +9,16 @@
 command <- 'curl "https://api.github.com/repos/openZH/covid_19/contents/fallzahlen_kanton_total_csv_v2?ref=master" | jq ".[].name"'
 
 files_list <- system(command = command, intern = TRUE)
+#-------------- Pulling the map data --------------
+swiss_map <- rnaturalearth::ne_states(country = "Switzerland", returnclass = "sf") %>%
+  dplyr::mutate(canton = substr(gn_a1_code, 4,5)) %>%
+  dplyr::select(canton, gn_a1_code) %>%
+  as.data.frame()
+swiss_map$geometry <- NULL
+swiss_map
 #-------------- Pulling the raw data --------------
 df_raw <- lapply(files_list, function(i){
-  print(files_list)
+  print(i)
   df <- read.csv(paste("https://raw.githubusercontent.com/openZH/covid_19/master/fallzahlen_kanton_total_csv_v2/", gsub('"', '', i), sep = ""))
   return(df)
 }) %>% dplyr::bind_rows()
@@ -33,6 +40,7 @@ covid19swiss <- df_raw %>%
   tidyr::pivot_longer(c(-date, - canton),
                       names_to = "type",
                       values_to = "cases") %>%
+  dplyr::left_join(swiss_map, by = "canton") %>%
   as.data.frame()
 head(covid19swiss)
 
