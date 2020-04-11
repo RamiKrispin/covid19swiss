@@ -11,7 +11,7 @@
 #'
 #' date - the timestamp of the case, a Date object
 #'
-#' canton - the cantons and Principality of Liechtenstein (FL) abbreviation
+#' canton - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
 #'
 #' type - the type of case
 #'
