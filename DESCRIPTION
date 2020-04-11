@@ -14,7 +14,10 @@ Depends:
 Imports:
   devtools,
 Suggests:
-    dplyr (>= 0.8.5)
+    dplyr (>= 0.8.5),
+    knitr,
+    rmarkdown
 URL: https://github.com/Covid19R/covid19swiss
 BugReports: https://github.com/Covid19R/covid19swiss/issues
 RoxygenNote: 7.1.0
+VignetteBuilder: knitr
