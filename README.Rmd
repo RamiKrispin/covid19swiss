@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons. The `covid19swiss` dataset includes the following fields:
+The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons and Principality of Liechtenstein (FL). The `covid19swiss` dataset includes the following fields:
 
 * `date` - the timestamp of the case, a `Date` object
 * `canton` - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
@@ -46,7 +46,7 @@ Where the available `type` field includes the following cases:
 
 
 Data source: [Specialist Unit for Open Government Data Canton of Zurich
-](http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html)
+](http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html), raw data is available on the following [repository](https://github.com/openZH/covid_19). Special thanks for all the people that collaborate and contribute to pull the data from multiple sources and make this data available!
 
 
 ## Installation
@@ -96,7 +96,14 @@ covid19swiss_wide <- covid19swiss %>%
   pivot_wider(names_from = type, values_from = cases)
 
 head(covid19swiss_wide)
+
 ```
+
+## Missing values
+
+The data is collected from multiple resources on the canton level, and not necessarily each data resource provides the same field. Therefore, some fields, such as total recovered or total tested may not be available at this point for some cantons and are marked as missing values (i.e., `NA`). 
+
+
 
 ## Contributing
 

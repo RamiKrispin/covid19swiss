@@ -16,7 +16,8 @@ commit](https://img.shields.io/github/last-commit/covid19r/covid19swiss)](https:
 
 The covid19swiss R package provides a tidy format dataset of the 2019
 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland
-cantons. The `covid19swiss` dataset includes the following fields:
+cantons and Principality of Liechtenstein (FL). The `covid19swiss`
+dataset includes the following fields:
 
   - `date` - the timestamp of the case, a `Date` object
   - `canton` - the cantons of Switzerland and Principality of
@@ -44,7 +45,11 @@ Where the available `type` field includes the following cases:
   - `total_death` - total number of death as of the current date
 
 Data source: [Specialist Unit for Open Government Data Canton of
-Zurich](http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html)
+Zurich](http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html),
+raw data is available on the following
+[repository](https://github.com/openZH/covid_19). Special thanks for all
+the people that collaborate and contribute to pull the data from
+multiple sources and make this data available\!
 
 ## Installation
 
@@ -87,7 +92,7 @@ head(covid19swiss)
 #>         date canton            type cases gn_a1_code
 #> 1 2020-02-25     GE    total_tested    72      CH.GE
 #> 2 2020-02-25     GE total_confirmed     0      CH.GE
-#> 3 2020-02-25     GE        new_hosp     0      CH.GE
+#> 3 2020-02-25     GE        new_hosp    NA      CH.GE
 #> 4 2020-02-25     GE    current_hosp     0      CH.GE
 #> 5 2020-02-25     GE     current_icu     0      CH.GE
 #> 6 2020-02-25     GE    current_vent     0      CH.GE
@@ -105,13 +110,21 @@ head(covid19swiss_wide)
 #> # A tibble: 6 x 11
 #>   date       canton gn_a1_code total_tested total_confirmed new_hosp current_hosp current_icu current_vent total_recovered total_death
 #>   <date>     <chr>  <chr>             <int>           <int>    <int>        <int>       <int>        <int>           <int>       <int>
-#> 1 2020-02-25 GE     CH.GE                72               0        0            0           0            0               0           0
-#> 2 2020-02-25 TI     CH.TI                 0               1        0            0           0            0               0           0
-#> 3 2020-02-26 GE     CH.GE               178               1        0            1           0            0               0           0
-#> 4 2020-02-26 TI     CH.TI                 0               0        0            0           0            0               0           0
-#> 5 2020-02-27 BS     CH.BS                 0               1        0            0           0            0               0           0
-#> 6 2020-02-27 FL     <NA>                  3               0        0            0           0            0               0           0
+#> 1 2020-02-25 GE     CH.GE                72               0       NA            0           0            0              NA          NA
+#> 2 2020-02-25 TI     CH.TI                NA               1       NA           NA          NA           NA              NA          NA
+#> 3 2020-02-26 GE     CH.GE               178               1       NA            1           0            0              NA          NA
+#> 4 2020-02-26 TI     CH.TI                NA              NA       NA           NA          NA           NA              NA          NA
+#> 5 2020-02-27 BS     CH.BS                NA               1       NA           NA          NA           NA              NA          NA
+#> 6 2020-02-27 FL     <NA>                  3              NA       NA           NA          NA           NA              NA          NA
 ```
+
+## Missing values
+
+The data is collected from multiple resources on the canton level, and
+not necessarily each data resource provides the same field. Therefore,
+some fields, such as total recovered or total tested may not be
+available at this point for some cantons and are marked as missing
+values (i.e., `NA`).
 
 ## Contributing
 
