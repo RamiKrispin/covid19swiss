@@ -5,18 +5,20 @@
 #'
 #' @format A data.frame object
 #' @source Specialist Unit for Open Government Data Canton of Zurich \href{http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html/}{website}
-#' @keywords datasets coronavirus COVID19 Switzerland Canton
-#' @details The dataset contains the daily summary of the Coronavirus pandemic cases in Switzerland. The data includes the following fields:
+#' @keywords datasets coronavirus COVID19 Switzerland Canton Liechtenstein
+#' @details The dataset contains the daily summary of the Coronavirus pandemic cases in Switzerland and Principality of Liechtenstein.
+#' The data includes the following fields:
 #'
 #' date - the timestamp of the case, a Date object
 #'
-#' canton - the canton abbreviation
+#' canton - the cantons and Principality of Liechtenstein (FL) abbreviation
 #'
 #' type - the type of case
 #'
 #' cases - the number of cases corresponding to the date and case type fields
 #'
 #' gn_a1_code - a canton index code for merging geometry data from the rnaturalearth package
+#'
 #'
 #' Where the available type field includes the following cases:
 #'

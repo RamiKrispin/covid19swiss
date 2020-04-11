@@ -17,17 +17,19 @@ covid19swiss
 daily summary of the Coronavirus (COVID-19) pandemic cases in Switzerland by Canton
 }
 \details{
-The dataset contains the daily summary of the Coronavirus pandemic cases in Switzerland. The data includes the following fields:
+The dataset contains the daily summary of the Coronavirus pandemic cases in Switzerland and Principality of Liechtenstein.
+The data includes the following fields:
 
 date - the timestamp of the case, a Date object
 
-canton - the canton abbreviation
+canton - the cantons and Principality of Liechtenstein (FL) abbreviation
 
 type - the type of case
 
 cases - the number of cases corresponding to the date and case type fields
 
 gn_a1_code - a canton index code for merging geometry data from the rnaturalearth package
+
 
 Where the available type field includes the following cases:
 
@@ -56,6 +58,7 @@ head(covid19swiss)
 }
 \keyword{COVID19}
 \keyword{Canton}
+\keyword{Liechtenstein}
 \keyword{Switzerland}
 \keyword{coronavirus}
 \keyword{datasets}
