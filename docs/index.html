@@ -45,6 +45,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/intro_covid19swiss.html">Introduction to the covid19italy Dataset</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -74,12 +86,12 @@
 <a href="#covid19swiss" class="anchor"></a>covid19swiss</h1></div>
 <!-- badges: start -->
 
-<p>The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons. The <code>covid19swiss</code> dataset includes the following fields:</p>
+<p>The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons and Principality of Liechtenstein (FL). The <code>covid19swiss</code> dataset includes the following fields:</p>
 <ul>
 <li>
 <code>date</code> - the timestamp of the case, a <code>Date</code> object</li>
 <li>
-<code>canton</code> - the canton abbreviation</li>
+<code>canton</code> - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code</li>
 <li>
 <code>type</code> - the type of case</li>
 <li>
@@ -106,7 +118,7 @@
 <li>
 <code>total_death</code> - total number of death as of the current date</li>
 </ul>
-<p>Data source: <a href="http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html">Specialist Unit for Open Government Data Canton of Zurich</a></p>
+<p>Data source: <a href="http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html">Specialist Unit for Open Government Data Canton of Zurich</a>, raw data is available on the following <a href="https://github.com/openZH/covid_19">repository</a>. Special thanks for all the people that collaborate and contribute to pull the data from multiple sources and make this data available!</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -134,7 +146,7 @@
 <span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;         date canton            type cases gn_a1_code</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; 1 2020-02-25     GE    total_tested    72      CH.GE</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; 2 2020-02-25     GE total_confirmed     0      CH.GE</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; 3 2020-02-25     GE        new_hosp     0      CH.GE</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; 3 2020-02-25     GE        new_hosp    NA      CH.GE</span></span>
 <span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; 4 2020-02-25     GE    current_hosp     0      CH.GE</span></span>
 <span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; 5 2020-02-25     GE     current_icu     0      CH.GE</span></span>
 <span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; 6 2020-02-25     GE    current_vent     0      CH.GE</span></span></code></pre></div>
@@ -150,15 +162,20 @@
 <span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; # A tibble: 6 x 11</span></span>
 <span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;   date       canton gn_a1_code total_tested total_confirmed new_hosp</span></span>
 <span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;             &lt;int&gt;           &lt;int&gt;    &lt;int&gt;</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 1 2020-02-25 GE     CH.GE                72               0        0</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; 2 2020-02-25 TI     CH.TI                 0               1        0</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; 3 2020-02-26 GE     CH.GE               178               1        0</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; 4 2020-02-26 TI     CH.TI                 0               0        0</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; 5 2020-02-27 BS     CH.BS                 0               1        0</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; 6 2020-02-27 FL     &lt;NA&gt;                  3               0        0</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 1 2020-02-25 GE     CH.GE                72               0       NA</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; 2 2020-02-25 TI     CH.TI                NA               1       NA</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; 3 2020-02-26 GE     CH.GE               178               1       NA</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; 4 2020-02-26 TI     CH.TI                NA              NA       NA</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; 5 2020-02-27 BS     CH.BS                NA               1       NA</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; 6 2020-02-27 FL     &lt;NA&gt;                  3              NA       NA</span></span>
 <span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; # … with 5 more variables: current_hosp &lt;int&gt;, current_icu &lt;int&gt;,</span></span>
 <span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; #   current_vent &lt;int&gt;, total_recovered &lt;int&gt;, total_death &lt;int&gt;</span></span></code></pre></div>
 </div>
+</div>
+<div id="missing-values" class="section level2">
+<h2 class="hasAnchor">
+<a href="#missing-values" class="anchor"></a>Missing values</h2>
+<p>The data is collected from multiple resources on the canton level, and not necessarily each data resource provides the same field. Therefore, some fields, such as total recovered or total tested may not be available at this point for some cantons and are marked as missing values (i.e., <code>NA</code>).</p>
 </div>
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
