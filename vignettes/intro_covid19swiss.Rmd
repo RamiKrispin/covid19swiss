@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the covid19italy Dataset"
+title: "Introduction to the covid19swiss Dataset"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to the covid19italy Dataset}
@@ -31,7 +31,7 @@ The `covid19swiss` dataset includes the following fields:
 * `canton` - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
 * `type` - the type of case
 * `cases` - the number of cases corresponding to the date and case type fields
-* `gn_a1_code` - a canton index code for merging geometry data from the **rnaturalearth** package
+* `gn_a1_code` - a canton index code for merging geometry data from the **rnaturalearth** package, available only for Switzerland cantons
 
 
 Where the available `type` field includes the following cases:
@@ -69,7 +69,11 @@ head(covid19swiss_wide)
 
 ### Query and summarise the data
 
+The following examples demonstrate simple methods for query and summarise the data with the dplyr and tidyr packages. 
 
+#### Cases summary by canton
+
+The first example demonstrates how to query the total confirmed, recovered, and death cases by canton as of April 8th:
 
 ```{r }
 library(dplyr)
@@ -81,5 +85,46 @@ covid19swiss %>%
   pivot_wider(names_from = type, values_from = cases) %>%
   arrange(-total_confirmed)
 ```
+
+**Note:** some fields, such as `total_recovered` or `total_tested`, are not available for some cantons and marked as missing values (i.e., `NA`)
+
+### Calculating rates for Canton of Geneva
+
+In the next example, we will filter the dataset for the Canton of Geneva and calculate the following metrics:
+
+* Positive rate - $\frac{Total ~confirmed}{Total ~tested}$
+* Recovery rate - $\frac{Total ~recovered}{Total ~confirmed}$
+* Death rate - $\frac{Total ~death}{Total ~confirmed}$
+
+
+
+```{r}
+covid19swiss %>% dplyr::filter(canton == "GE",
+                               date == as.Date("2020-04-08")) %>%
+  dplyr::select(type, cases) %>%
+  tidyr::pivot_wider(names_from = type, values_from = cases) %>%
+  dplyr::mutate(positive_tested = round(100 * total_confirmed / total_tested, 2),
+                death_rate = round(100 * total_death / total_confirmed, 2),
+                recovery_rate = round(100 * total_recovered / total_confirmed, 2)) %>%
+  dplyr::select(positive_tested, recovery_rate, death_rate) 
+```
+
+Values are in precentage
+
+
+### Separating between Switzerland and Principality of Liechtenstein
+
+The raw data include both Switzerland and the Principality of Liechtenstein. Separating the data by country can be done by using the `canton` field:
+
+```{r}
+switzerland <- covid19swiss %>% filter(canton != "FL")
+
+head(switzerland)
+
+liechtenstein <- covid19swiss %>% filter(canton == "FL")
+
+head(liechtenstein)
+```
+
 
 
