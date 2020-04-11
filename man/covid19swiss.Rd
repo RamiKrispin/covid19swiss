@@ -27,6 +27,7 @@ type - the type of case
 
 cases - the number of cases corresponding to the date and case type fields
 
+gn_a1_code - a canton index code for merging geometry data from the rnaturalearth package
 
 Where the available type field includes the following cases:
 
