@@ -81,7 +81,11 @@ library(covid19swiss)
 update_swiss_data()
 ```
 
-**Note:** must restart the R session to have the updates available
+More information about updating the data is available on this
+[vignette](https://covid19r.github.io/covid19swiss/articles/update_the_data.html)
+
+**Note:** must restart the R session after using the `update_swiss_data`
+function in order to have the updates available
 
 ## Usage
 
