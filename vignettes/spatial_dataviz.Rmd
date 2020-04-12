@@ -1,0 +1,19 @@
+---
+title: "Geospatial visualization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Geospatial visualization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(covid19swiss)
+```
