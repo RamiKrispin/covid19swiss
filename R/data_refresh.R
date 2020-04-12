@@ -35,7 +35,7 @@ update_swiss_data <- function(){
   if(flag){
     q <- base::tolower(base::readline("Updates are available on the covid19swiss Dev version, do you want to update? n/Y"))
 
-    if(q == "y" | q == "yes"){
+    if(q == "y" || q == "yes" || q == ""){
 
       base::tryCatch(
         expr = {
