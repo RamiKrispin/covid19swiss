@@ -46,10 +46,13 @@ Where the available `type` field includes the following cases:
 
 More information can be found the following vignettes:
 
-  - [Introduction to the covid19swiss Dataset]()
-  - [Updating the covid19swiss Dataset]()
-  - [Geospatial Visualization of Switzerland Cantons]() (non CRAN
-    vignette)
+  - [Introduction to the covid19swiss
+    Dataset](https://covid19r.github.io/covid19swiss/articles/intro_covid19swiss.html)
+  - [Updating the covid19swiss
+    Dataset](https://covid19r.github.io/covid19swiss/articles/update_the_data.html)
+  - [Geospatial Visualization of Switzerland
+    Cantons](https://covid19r.github.io/covid19swiss/articles/spatial_dataviz.html)
+    (non CRAN vignette)
 
 Data source: [Specialist Unit for Open Government Data Canton of
 Zurich](http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html),
