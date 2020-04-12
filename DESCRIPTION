@@ -17,7 +17,8 @@ Suggests:
     dplyr (>= 0.8.5),
     tidyr (>= 1.0.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 URL: https://github.com/Covid19R/covid19swiss
 BugReports: https://github.com/Covid19R/covid19swiss/issues
 RoxygenNote: 7.1.0
