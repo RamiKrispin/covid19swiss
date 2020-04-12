@@ -10,10 +10,119 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  message=FALSE, 
+  warning=FALSE,
+  fig.height=8, 
+  fig.width=8,
   comment = "#>"
 )
 ```
 
-```{r setup}
-library(covid19swiss)
+The covid19swiss dataset provides a summary of the covid19 cases in Switzerland cantons and the Principality of Liechtenstein (FL). Therefore, for the case of Switzerland cantons, it may be useful to use geospatial visualization tools to presents the data. This vignette will demonstrate how to visualize the Switzerland cantons with choropleth maps.
+
+Note that this vignette does not include on the CRAN version due to CRNA 5mb size limitation. In addition, the following packages, that needed for this vignette, do not include in the package description and required to run this vignette:
+
+* **rnaturalearth** for getting the geometric data of Switzerland cantons
+* **mapview** for creating choropleth maps based on the [Leaflet](https://leafletjs.com/) JaveScript library
+* **ggplot2**  for creating choropleth maps 
+* **viridisLite** for color palette
+
+To install those packages use the following code:
+
+``` r
+install.packages(c("rnaturalearth", "mapview", "ggplot2", "viridisLite"))
 ```
+### Getting the geomatic data for Switzerland cantons
+
+This vignette is focusing only on plotting the Switzerland cantons. Therefore, we will start by subsetting the canton data from the covid19swiss dataset, as the data also includes the Principality of Liechtenstein:
+
+
+```{r}
+library(covid19swiss)
+library(dplyr)
+library(tidyr)
+
+swiss_wide <- covid19swiss %>% filter(canton != "FL", 
+                                      date == as.Date("2020-04-09")) %>%
+  pivot_wider(names_from = type, values_from = cases) 
+
+head(swiss_wide)
+```
+
+Note that we filter the data by using `canton != "FL"` to remove the Principality of Liechtenstein, and `date == as.Date("2020-04-09")` to take a snapshot of number of cases on April 9th, 2020.
+
+Next, we will use the [rnaturalearth](https://docs.ropensci.org/rnaturalearth/) package to get Switzerland geometric data, using the `ne_states` function:
+
+```{r}
+library(rnaturalearth)
+swiss_map <- ne_states(country = "Switzerland", returnclass = "sf")
+
+str(swiss_map)
+```
+
+As you can see, the `se_states` function returns 26 rows, one for each canton, and 84 columns. To plot the data, we will need the following variable:
+
+* `geometry` - contains the geometry data of the cantons
+* `gn_a1_code` - the cantons code available also on the covid19swiss package, will use it as key to merge the geometry data with swiss_df
+* `name_en` - optional, the name of the canton in English
+
+```{r}
+swiss_map <- swiss_map %>% 
+  select(gn_a1_code, name_en) 
+
+head(swiss_map)
+```
+
+Note that the `geometry` is remain in the subset data we created above (even that we did not include on the `select` function).
+
+Now, that we have both the canton data (`swiss_wide`) and geometry (`swiss_map`), we will merge the two using the `gn_a1_code` field as key:
+
+```{r}
+swiss_df <- swiss_map %>% left_join(swiss_wide, by = "gn_a1_code")
+```
+
+### Choropleth maps with the mapview package
+
+Using the swiss_df object we created above, it is straightforward to create a choropleth map with mapview package. In the following example, we will use the mapview function to plot the total confirmed cases by canton. The `zcol` argument defines the column to display on the choropleth map:
+
+```{r }
+library(mapview)
+
+mapview(swiss_df, zcol = "total_confirmed")
+```
+
+The `col.regions` argument allows you to set the color palette. For instance, we can use the `plasma` palette from the **virdisLight** package to plot total death by canton:
+
+```{r}
+library(viridisLite)
+
+mapview(swiss_df, zcol = "total_death", col.regions = plasma)
+```
+
+Additional customization options can be found on the mapview package [site](https://r-spatial.github.io/mapview/index.html)
+
+### Choropleth maps with the ggplot2 package
+
+Likewise, we can use the **ggplot2** package to create a choropleth map with the use of the `geom_sf` argument:
+
+```{r}
+library(ggplot2)
+
+ggplot(data = swiss_df, aes(fill = `total_confirmed`)) + 
+  geom_sf() + 
+  scale_fill_viridis_b()
+```
+
+Customizations of the plot color palette can be done with the `scale_fill_viridis_b` function. For example, by default, the function uses the viridis palette from the viridis package. We can modify the palette to `magma` palette, by setting the `option` argument to `A`:
+
+
+```{r}
+ggplot(data = swiss_df, aes(fill = `total_confirmed`)) + 
+  geom_sf() + 
+    scale_fill_viridis_b(option = "A",
+                       begin = 0.2,
+                       end = 0.7) + 
+   theme_void()
+```
+
+The `theme_void` remove the axis grids and the gray background.
