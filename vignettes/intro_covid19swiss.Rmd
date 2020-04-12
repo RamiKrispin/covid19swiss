@@ -79,7 +79,7 @@ The first example demonstrates how to query the total confirmed, recovered, and 
 library(dplyr)
 
 covid19swiss %>%
-  filter(date == as.Date("2020-04-08"),
+  filter(date == as.Date("2020-04-10"),
          type %in% c("total_confirmed", "total_recovered", "total_death")) %>%
   select(canton, cases, type) %>%
   pivot_wider(names_from = type, values_from = cases) %>%
@@ -100,7 +100,7 @@ In the next example, we will filter the dataset for the Canton of Geneva and cal
 
 ```{r}
 covid19swiss %>% dplyr::filter(canton == "GE",
-                               date == as.Date("2020-04-08")) %>%
+                               date == as.Date("2020-04-10")) %>%
   dplyr::select(type, cases) %>%
   tidyr::pivot_wider(names_from = type, values_from = cases) %>%
   dplyr::mutate(positive_tested = round(100 * total_confirmed / total_tested, 2),
