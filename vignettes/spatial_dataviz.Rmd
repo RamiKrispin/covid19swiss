@@ -1,5 +1,5 @@
 ---
-title: "Geospatial visualization"
+title: "Geospatial Visualization of Switzerland Cantons"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Geospatial visualization}

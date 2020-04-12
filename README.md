@@ -16,7 +16,7 @@ commit](https://img.shields.io/github/last-commit/covid19r/covid19swiss)](https:
 
 The covid19swiss R package provides a tidy format dataset of the 2019
 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland
-cantons and Principality of Liechtenstein (FL). The `covid19swiss`
+cantons and the Principality of Liechtenstein (FL). The `covid19swiss`
 dataset includes the following fields:
 
   - `date` - the timestamp of the case, a `Date` object
@@ -43,6 +43,13 @@ Where the available `type` field includes the following cases:
   - `total_recovered` - total number of patients recovered as of the
     current date
   - `total_death` - total number of death as of the current date
+
+More information can be found the following vignettes:
+
+  - [Introduction to the covid19swiss Dataset]()
+  - [Updating the covid19swiss Dataset]()
+  - [Geospatial Visualization of Switzerland Cantons]() (non CRAN
+    vignette)
 
 Data source: [Specialist Unit for Open Government Data Canton of
 Zurich](http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html),

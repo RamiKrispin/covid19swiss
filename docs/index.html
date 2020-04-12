@@ -56,7 +56,10 @@
       <a href="articles/intro_covid19swiss.html">Introduction to the covid19swiss Dataset</a>
     </li>
     <li>
-      <a href="articles/update_the_data.html">Update the Dataset</a>
+      <a href="articles/spatial_dataviz.html">Geospatial Visualization of Switzerland Cantons</a>
+    </li>
+    <li>
+      <a href="articles/update_the_data.html">Updating the covid19swiss Dataset</a>
     </li>
   </ul>
 </li>
@@ -89,7 +92,7 @@
 <a href="#covid19swiss" class="anchor"></a>covid19swiss</h1></div>
 <!-- badges: start -->
 
-<p>The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons and Principality of Liechtenstein (FL). The <code>covid19swiss</code> dataset includes the following fields:</p>
+<p>The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons and the Principality of Liechtenstein (FL). The <code>covid19swiss</code> dataset includes the following fields:</p>
 <ul>
 <li>
 <code>date</code> - the timestamp of the case, a <code>Date</code> object</li>
@@ -121,6 +124,13 @@
 <li>
 <code>total_death</code> - total number of death as of the current date</li>
 </ul>
+<p>More information can be found the following vignettes:</p>
+<ul>
+<li><a href="">Introduction to the covid19swiss Dataset</a></li>
+<li><a href="">Updating the covid19swiss Dataset</a></li>
+<li>
+<a href="">Geospatial Visualization of Switzerland Cantons</a> (non CRAN vignette)</li>
+</ul>
 <p>Data source: <a href="http://open.zh.ch/internet/justiz_inneres/ogd/de/daten.html">Specialist Unit for Open Government Data Canton of Zurich</a>, raw data is available on the following <a href="https://github.com/openZH/covid_19">repository</a>. Special thanks for all the people that collaborate and contribute to pull the data from multiple sources and make this data available!</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -138,7 +148,8 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(covid19swiss)</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="kw"><a href="reference/update_swiss_data.html">update_swiss_data</a></span>()</span></code></pre></div>
-<p><strong>Note:</strong> must restart the R session to have the updates available</p>
+<p>More information about updating the data is available on this <a href="https://covid19r.github.io/covid19swiss/articles/update_the_data.html">vignette</a></p>
+<p><strong>Note:</strong> must restart the R session after using the <code>update_swiss_data</code> function in order to have the updates available</p>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">

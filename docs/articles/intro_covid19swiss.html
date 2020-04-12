@@ -56,7 +56,10 @@
       <a href="../articles/intro_covid19swiss.html">Introduction to the covid19swiss Dataset</a>
     </li>
     <li>
-      <a href="../articles/update_the_data.html">Update the Dataset</a>
+      <a href="../articles/spatial_dataviz.html">Geospatial Visualization of Switzerland Cantons</a>
+    </li>
+    <li>
+      <a href="../articles/update_the_data.html">Updating the covid19swiss Dataset</a>
     </li>
   </ul>
 </li>
@@ -167,25 +170,25 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a>covid19swiss <span class="op">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(date <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="st">"2020-04-08"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(date <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="st">"2020-04-10"</span>),</span>
 <span id="cb3-5"><a href="#cb3-5"></a>         type <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"total_confirmed"</span>, <span class="st">"total_recovered"</span>, <span class="st">"total_death"</span>)) <span class="op">%&gt;%</span></span>
 <span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(canton, cases, type) <span class="op">%&gt;%</span></span>
 <span id="cb3-7"><a href="#cb3-7"></a><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> type, <span class="dt">values_from =</span> cases) <span class="op">%&gt;%</span></span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="op">-</span>total_confirmed)</span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; # A tibble: 26 x 4</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; # A tibble: 24 x 4</span></span>
 <span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt;    canton total_confirmed total_recovered total_death</span></span>
 <span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;    &lt;chr&gt;            &lt;int&gt;           &lt;int&gt;       &lt;int&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;  1 VD                4315              NA         185</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;  2 GE                4216             442         125</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;  3 ZH                2807              NA          57</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;  4 TI                2659             420         211</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt;  5 VS                1484             130          68</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt;  6 BE                1286              NA          37</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt;  7 BS                 834             535          31</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt;  8 AG                 788             220          16</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;  9 FR                 756              78          45</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; 10 BL                 694             461          21</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; # … with 16 more rows</span></span></code></pre></div>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;  1 VD                4524              NA          NA</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;  2 GE                4310             448         144</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;  3 ZH                2929              NA          64</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;  4 TI                2776             466         227</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt;  5 VS                1565             136          75</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt;  6 BE                1375              NA          42</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt;  7 BS                 859             593          33</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt;  8 AG                 850              NA          18</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;  9 FR                 796              88          49</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; 10 BL                 722             502          22</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; # … with 14 more rows</span></span></code></pre></div>
 <p><strong>Note:</strong> some fields, such as <code>total_recovered</code> or <code>total_tested</code>, are not available for some cantons and marked as missing values (i.e., <code>NA</code>)</p>
 </div>
 </div>
@@ -202,7 +205,7 @@
 </li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(canton <span class="op">==</span><span class="st"> "GE"</span>,</span>
-<span id="cb4-2"><a href="#cb4-2"></a>                               date <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="st">"2020-04-08"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>                               date <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="st">"2020-04-10"</span>)) <span class="op">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(type, cases) <span class="op">%&gt;%</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> type, <span class="dt">values_from =</span> cases) <span class="op">%&gt;%</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">positive_tested =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>total_confirmed <span class="op">/</span><span class="st"> </span>total_tested, <span class="dv">2</span>),</span>
@@ -212,7 +215,7 @@
 <span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; # A tibble: 1 x 3</span></span>
 <span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;   positive_tested recovery_rate death_rate</span></span>
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;             &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; 1            24.3          10.5       2.96</span></span></code></pre></div>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; 1            23.6          10.4       3.34</span></span></code></pre></div>
 <p>Values are in precentage</p>
 </div>
 <div id="separating-between-switzerland-and-principality-of-liechtenstein" class="section level3">

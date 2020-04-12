@@ -1,5 +1,5 @@
 ---
-title: "Update the Dataset"
+title: "Updating the covid19swiss Dataset"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Update the Dataset}
