@@ -38,9 +38,14 @@ covid19swiss <- df_raw %>%
                    total_recovered = sum(ncumul_released, na.rm = any(!is.na(ncumul_released))),
                    total_death = sum(ncumul_deceased, na.rm = any(!is.na(ncumul_deceased)))) %>%
   tidyr::pivot_longer(c(-date, - canton),
-                      names_to = "type",
-                      values_to = "cases") %>%
+                      names_to = "data_type",
+                      values_to = "value") %>%
   dplyr::left_join(swiss_map, by = "canton") %>%
+  dplyr::mutate(location = canton,
+                location_type = ifelse(canton == "FL", "Principality of Liechtenstein", "Canton of Switzerland"),
+                location_standardized = gn_a1_code,
+                location_standardized_type = "gn_a1_code") %>%
+  dplyr::select(date, location, location_type, location_standardized, location_standardized_type, data_type, value) %>%
   as.data.frame()
 head(covid19swiss)
 
