@@ -20,15 +20,20 @@ cantons and the Principality of Liechtenstein (FL). The `covid19swiss`
 dataset includes the following fields:
 
   - `date` - the timestamp of the case, a `Date` object
-  - `canton` - the cantons of Switzerland and Principality of
-    Liechtenstein (FL) abbreviation code
-  - `type` - the type of case
-  - `cases` - the number of cases corresponding to the date and case
-    type fields
-  - `gn_a1_code` - a canton index code for merging geometry data from
-    the **rnaturalearth** package
+  - `location` - the **Cantons of Switzerland** and **the Principality
+    of Liechtenstein** (FL) abbreviation code
+  - `location_type` - description of the location, either **Canton of
+    Switzerland** or **the Principality of echtenstein**
+  - `location_standardized` - a canton index code for merging geometry
+    data from the rnaturalearth package, ailable only for Switzerland
+    cantons
+  - `location_standardized_type` - the name of code in the
+    **rnaturalearth** package for Switzerland map
+  - `data_type` - the type of case
+  - `value` - the number of cases corresponding to the `date` and
+    `data_type` fields
 
-Where the available `type` field includes the following cases:
+Where the available `data_type` field includes the following cases:
 
   - `total_tested` - number of tests performed as of the date
   - `total_confirmed` - number of positive cases as of the date
@@ -103,13 +108,13 @@ function in order to have the updates available
 data(covid19swiss)
 
 head(covid19swiss)
-#>         date canton            type cases gn_a1_code
-#> 1 2020-02-25     GE    total_tested    72      CH.GE
-#> 2 2020-02-25     GE total_confirmed     0      CH.GE
-#> 3 2020-02-25     GE        new_hosp    NA      CH.GE
-#> 4 2020-02-25     GE    current_hosp     0      CH.GE
-#> 5 2020-02-25     GE     current_icu     0      CH.GE
-#> 6 2020-02-25     GE    current_vent     0      CH.GE
+#>         date location         location_type location_standardized location_standardized_type       data_type value
+#> 1 2020-02-25       GE Canton of Switzerland                 CH.GE                 gn_a1_code    total_tested    72
+#> 2 2020-02-25       GE Canton of Switzerland                 CH.GE                 gn_a1_code total_confirmed     0
+#> 3 2020-02-25       GE Canton of Switzerland                 CH.GE                 gn_a1_code        new_hosp    NA
+#> 4 2020-02-25       GE Canton of Switzerland                 CH.GE                 gn_a1_code    current_hosp     0
+#> 5 2020-02-25       GE Canton of Switzerland                 CH.GE                 gn_a1_code     current_icu     0
+#> 6 2020-02-25       GE Canton of Switzerland                 CH.GE                 gn_a1_code    current_vent     0
 ```
 
 ### Wide format
@@ -118,18 +123,18 @@ head(covid19swiss)
 library(tidyr)
 
 covid19swiss_wide <- covid19swiss %>% 
-  pivot_wider(names_from = type, values_from = cases)
+  pivot_wider(names_from = data_type, values_from = value)
 
 head(covid19swiss_wide)
-#> # A tibble: 6 x 11
-#>   date       canton gn_a1_code total_tested total_confirmed new_hosp current_hosp current_icu current_vent total_recovered total_death
-#>   <date>     <chr>  <chr>             <int>           <int>    <int>        <int>       <int>        <int>           <int>       <int>
-#> 1 2020-02-25 GE     CH.GE                72               0       NA            0           0            0              NA          NA
-#> 2 2020-02-25 TI     CH.TI                NA               1       NA           NA          NA           NA              NA          NA
-#> 3 2020-02-26 GE     CH.GE               178               1       NA            1           0            0              NA          NA
-#> 4 2020-02-26 TI     CH.TI                NA              NA       NA           NA          NA           NA              NA          NA
-#> 5 2020-02-27 BS     CH.BS                NA               1       NA           NA          NA           NA              NA          NA
-#> 6 2020-02-27 FL     <NA>                  3              NA       NA           NA          NA           NA              NA          NA
+#> # A tibble: 6 x 13
+#>   date       location location_type               location_standardized location_standardized_t… total_tested total_confirmed new_hosp current_hosp current_icu current_vent total_recovered total_death
+#>   <date>     <chr>    <chr>                       <chr>                 <chr>                           <int>           <int>    <int>        <int>       <int>        <int>           <int>       <int>
+#> 1 2020-02-25 GE       Canton of Switzerland       CH.GE                 gn_a1_code                         72               0       NA            0           0            0              NA          NA
+#> 2 2020-02-25 TI       Canton of Switzerland       CH.TI                 gn_a1_code                         NA               1       NA           NA          NA           NA              NA          NA
+#> 3 2020-02-26 GE       Canton of Switzerland       CH.GE                 gn_a1_code                        178               1       NA            1           0            0              NA          NA
+#> 4 2020-02-26 TI       Canton of Switzerland       CH.TI                 gn_a1_code                         NA              NA       NA           NA          NA           NA              NA          NA
+#> 5 2020-02-27 BS       Canton of Switzerland       CH.BS                 gn_a1_code                         NA               1       NA           NA          NA           NA              NA          NA
+#> 6 2020-02-27 FL       Principality of Liechtenst… <NA>                  gn_a1_code                          3              NA       NA           NA          NA           NA              NA          NA
 ```
 
 ## Missing values

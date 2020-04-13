@@ -27,13 +27,15 @@ knitr::opts_chunk$set(
 The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons and the Principality of Liechtenstein (FL). The `covid19swiss` dataset includes the following fields:
 
 * `date` - the timestamp of the case, a `Date` object
-* `canton` - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
-* `type` - the type of case
-* `cases` - the number of cases corresponding to the date and case type fields
-* `gn_a1_code` - a canton index code for merging geometry data from the **rnaturalearth** package
+* `location` - the **Cantons of Switzerland** and **the Principality of Liechtenstein** (FL) abbreviation code
+* `location_type` - description of the location, either **Canton of Switzerland** or **the Principality of echtenstein**
+* `location_standardized` - a canton index code for merging geometry data from the rnaturalearth package, ailable only for Switzerland cantons
+* `location_standardized_type` - the name of code in the **rnaturalearth** package for Switzerland map
+* `data_type` - the type of case
+* `value` - the number of cases corresponding to the `date` and `data_type` fields
 
 
-Where the available `type` field includes the following cases:
+Where the available `data_type` field includes the following cases:
 
 * `total_tested` - number of tests performed as of the date
 * `total_confirmed` - number of positive cases as of the date
@@ -104,7 +106,7 @@ head(covid19swiss)
 library(tidyr)
 
 covid19swiss_wide <- covid19swiss %>% 
-  pivot_wider(names_from = type, values_from = cases)
+  pivot_wider(names_from = data_type, values_from = value)
 
 head(covid19swiss_wide)
 
