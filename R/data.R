@@ -11,16 +11,22 @@
 #'
 #' date - the timestamp of the case, a Date object
 #'
-#' canton - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
+#' location - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
 #'
-#' type - the type of case
+#' location_type - description of the location, either Canton of Switzerland or Principality of Liechtenstein
 #'
-#' cases - the number of cases corresponding to the date and case type fields
+#' location_standardized - a canton index code for merging geometry data from the rnaturalearth package, available only for Switzerland cantons
 #'
-#' gn_a1_code - a canton index code for merging geometry data from the rnaturalearth package, available only for Switzerland cantons
+#' location_standardized_type - the name of code in the rnaturalearth package for Switzerland map
+#'
+#' data_type - the type of case
+#'
+#' value - the number of cases corresponding to the date and case type fields
 #'
 #'
-#' Where the available type field includes the following cases:
+#'
+#'
+#' Where the available data_type field includes the following cases:
 #'
 #' total_tested - number of tests performed as of the date
 #'
