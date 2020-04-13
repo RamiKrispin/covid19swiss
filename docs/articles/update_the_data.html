@@ -123,23 +123,32 @@
 <span id="cb4-2"><a href="#cb4-2"></a>                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(swiss_df)</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt;         date canton            type cases gn_a1_code</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; 1 2020-02-25     GE    total_tested    72      CH.GE</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; 2 2020-02-25     GE total_confirmed     0      CH.GE</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; 3 2020-02-25     GE        new_hosp    NA      CH.GE</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; 4 2020-02-25     GE    current_hosp     0      CH.GE</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; 5 2020-02-25     GE     current_icu     0      CH.GE</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; 6 2020-02-25     GE    current_vent     0      CH.GE</span></span></code></pre></div>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt;         date location         location_type location_standardized</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; 1 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; 2 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; 3 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; 4 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; 5 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; 6 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;   location_standardized_type       data_type value</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; 1                 gn_a1_code    total_tested    72</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 2                 gn_a1_code total_confirmed     0</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; 3                 gn_a1_code        new_hosp    NA</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; 4                 gn_a1_code    current_hosp     0</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; 5                 gn_a1_code     current_icu     0</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; 6                 gn_a1_code    current_vent     0</span></span></code></pre></div>
 <p>The main difference between the first method (the <code>update_swiss_data</code> function) and the second method (reading a CSV format of the data) is that the date field on the last method is not formated as a Date object. A quick reformating can fix it:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>swiss_df<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(swiss_df<span class="op">$</span>date)</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(swiss_df)</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; 'data.frame':    6824 obs. of  5 variables:</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;  $ date      : Date, format: "2020-02-25" "2020-02-25" ...</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;  $ canton    : chr  "GE" "GE" "GE" "GE" ...</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;  $ type      : chr  "total_tested" "total_confirmed" "new_hosp" "current_hosp" ...</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;  $ cases     : int  72 0 NA 0 0 0 NA NA NA 1 ...</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;  $ gn_a1_code: chr  "CH.GE" "CH.GE" "CH.GE" "CH.GE" ...</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; 'data.frame':    7000 obs. of  7 variables:</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;  $ date                      : Date, format: "2020-02-25" "2020-02-25" ...</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;  $ location                  : chr  "GE" "GE" "GE" "GE" ...</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt;  $ location_type             : chr  "Canton of Switzerland" "Canton of Switzerland" "Canton of Switzerland" "Canton of Switzerland" ...</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;  $ location_standardized     : chr  "CH.GE" "CH.GE" "CH.GE" "CH.GE" ...</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;  $ location_standardized_type: chr  "gn_a1_code" "gn_a1_code" "gn_a1_code" "gn_a1_code" ...</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;  $ data_type                 : chr  "total_tested" "total_confirmed" "new_hosp" "current_hosp" ...</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  $ value                     : int  72 0 NA 0 0 0 NA NA NA 1 ...</span></span></code></pre></div>
 </div>
   </div>
 

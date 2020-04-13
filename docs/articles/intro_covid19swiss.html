@@ -105,15 +105,20 @@
 <li>
 <code>date</code> - the timestamp of the case, a <code>Date</code> object</li>
 <li>
-<code>canton</code> - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code</li>
+<code>location</code> - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code</li>
 <li>
-<code>type</code> - the type of case</li>
+<code>location_type</code> - description of the location, either <strong>Canton of Switzerland</strong> or <strong>the Principality of echtenstein</strong>
+</li>
 <li>
-<code>cases</code> - the number of cases corresponding to the date and case type fields</li>
+<code>location_standardized</code> - a canton index code for merging geometry data from the <strong>rnaturalearth</strong> package, ailable only for Switzerland cantons</li>
 <li>
-<code>gn_a1_code</code> - a canton index code for merging geometry data from the <strong>rnaturalearth</strong> package, available only for Switzerland cantons</li>
+<code>location_standardized_type</code> - the name of code in the <strong>rnaturalearth</strong> package for Switzerland map</li>
+<li>
+<code>data_type</code> - the type of case</li>
+<li>
+<code>value</code> - the number of cases corresponding to the <code>date</code> and <code>data_type</code> fields</li>
 </ul>
-<p>Where the available <code>type</code> field includes the following cases:</p>
+<p>Where the available <code>data_type</code> field includes the following cases:</p>
 <ul>
 <li>
 <code>total_tested</code> - number of tests performed as of the date</li>
@@ -136,31 +141,39 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(covid19swiss)</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(covid19swiss)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt;         date canton            type cases gn_a1_code</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt; 1 2020-02-25     GE    total_tested    72      CH.GE</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt; 2 2020-02-25     GE total_confirmed     0      CH.GE</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt; 3 2020-02-25     GE        new_hosp    NA      CH.GE</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#&gt; 4 2020-02-25     GE    current_hosp     0      CH.GE</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; 5 2020-02-25     GE     current_icu     0      CH.GE</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; 6 2020-02-25     GE    current_vent     0      CH.GE</span></span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt;         date location         location_type location_standardized</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt; 1 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt; 2 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt; 3 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#&gt; 4 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; 5 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; 6 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt;   location_standardized_type       data_type value</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">#&gt; 1                 gn_a1_code    total_tested    72</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#&gt; 2                 gn_a1_code total_confirmed     0</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt; 3                 gn_a1_code        new_hosp    NA</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co">#&gt; 4                 gn_a1_code    current_hosp     0</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">#&gt; 5                 gn_a1_code     current_icu     0</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co">#&gt; 6                 gn_a1_code    current_vent     0</span></span></code></pre></div>
 <p>It is straightforward to transform the data into a wide format with the <code>pivot_wider</code> function from the <strong>tidyr</strong> package:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a>covid19swiss_wide &lt;-<span class="st"> </span>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> type, <span class="dt">values_from =</span> cases)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> data_type, <span class="dt">values_from =</span> value)</span>
 <span id="cb2-5"><a href="#cb2-5"></a></span>
 <span id="cb2-6"><a href="#cb2-6"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(covid19swiss_wide)</span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; # A tibble: 6 x 11</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;   date       canton gn_a1_code total_tested total_confirmed new_hosp</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;             &lt;int&gt;           &lt;int&gt;    &lt;int&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; 1 2020-02-25 GE     CH.GE                72               0       NA</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; 2 2020-02-25 TI     CH.TI                NA               1       NA</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; 3 2020-02-26 GE     CH.GE               178               1       NA</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; 4 2020-02-26 TI     CH.TI                NA              NA       NA</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; 5 2020-02-27 BS     CH.BS                NA               1       NA</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; 6 2020-02-27 FL     &lt;NA&gt;                  3              NA       NA</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; # … with 5 more variables: current_hosp &lt;int&gt;, current_icu &lt;int&gt;,</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; #   current_vent &lt;int&gt;, total_recovered &lt;int&gt;, total_death &lt;int&gt;</span></span></code></pre></div>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; # A tibble: 6 x 13</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;   date       location location_type location_standa… location_standa…</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;           </span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; 1 2020-02-25 GE       Canton of Sw… CH.GE            gn_a1_code      </span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; 2 2020-02-25 TI       Canton of Sw… CH.TI            gn_a1_code      </span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; 3 2020-02-26 GE       Canton of Sw… CH.GE            gn_a1_code      </span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; 4 2020-02-26 TI       Canton of Sw… CH.TI            gn_a1_code      </span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; 5 2020-02-27 BS       Canton of Sw… CH.BS            gn_a1_code      </span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; 6 2020-02-27 FL       Principality… &lt;NA&gt;             gn_a1_code      </span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; # … with 8 more variables: total_tested &lt;int&gt;, total_confirmed &lt;int&gt;,</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; #   new_hosp &lt;int&gt;, current_hosp &lt;int&gt;, current_icu &lt;int&gt;, current_vent &lt;int&gt;,</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; #   total_recovered &lt;int&gt;, total_death &lt;int&gt;</span></span></code></pre></div>
 </div>
 <div id="query-and-summarise-the-data" class="section level3">
 <h3 class="hasAnchor">
@@ -174,23 +187,23 @@
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a>covid19swiss <span class="op">%&gt;%</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(date <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="st">"2020-04-10"</span>),</span>
-<span id="cb3-5"><a href="#cb3-5"></a>         type <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"total_confirmed"</span>, <span class="st">"total_recovered"</span>, <span class="st">"total_death"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(canton, cases, type) <span class="op">%&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> type, <span class="dt">values_from =</span> cases) <span class="op">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>         data_type <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"total_confirmed"</span>, <span class="st">"total_recovered"</span>, <span class="st">"total_death"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(location, value, data_type) <span class="op">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> data_type, <span class="dt">values_from =</span> value) <span class="op">%&gt;%</span></span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="op">-</span>total_confirmed)</span>
 <span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; # A tibble: 24 x 4</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt;    canton total_confirmed total_recovered total_death</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;    &lt;chr&gt;            &lt;int&gt;           &lt;int&gt;       &lt;int&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;  1 VD                4524              NA          NA</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;  2 GE                4310             448         144</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;  3 ZH                2929              NA          64</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;  4 TI                2776             466         227</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt;  5 VS                1565             136          75</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt;  6 BE                1375              NA          42</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt;  7 BS                 859             593          33</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt;  8 AG                 850              NA          18</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;  9 FR                 796              88          49</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; 10 BL                 722             502          22</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt;    location total_confirmed total_recovered total_death</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;    &lt;chr&gt;              &lt;int&gt;           &lt;int&gt;       &lt;int&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;  1 VD                  4524              NA         224</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;  2 GE                  4310             448         144</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;  3 ZH                  2929              NA          64</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt;  4 TI                  2776             466         227</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt;  5 VS                  1565             136          75</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt;  6 BE                  1375              NA          42</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt;  7 BS                   859             593          33</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt;  8 AG                   850              NA          18</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt;  9 FR                   796              88          49</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; 10 BL                   722             502          22</span></span>
 <span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; # … with 14 more rows</span></span></code></pre></div>
 <p><strong>Note:</strong> some fields, such as <code>total_recovered</code> or <code>total_tested</code>, are not available for some cantons and marked as missing values (i.e., <code>NA</code>)</p>
 </div>
@@ -207,10 +220,10 @@
 <li>Death rate - <span class="math inline">\(\frac{Total ~death}{Total ~confirmed}\)</span>
 </li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(canton <span class="op">==</span><span class="st"> "GE"</span>,</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(location <span class="op">==</span><span class="st"> "GE"</span>,</span>
 <span id="cb4-2"><a href="#cb4-2"></a>                               date <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="st">"2020-04-10"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(type, cases) <span class="op">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> type, <span class="dt">values_from =</span> cases) <span class="op">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(data_type, value) <span class="op">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="dt">names_from =</span> data_type, <span class="dt">values_from =</span> value) <span class="op">%&gt;%</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">positive_tested =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>total_confirmed <span class="op">/</span><span class="st"> </span>total_tested, <span class="dv">2</span>),</span>
 <span id="cb4-6"><a href="#cb4-6"></a>                <span class="dt">death_rate =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>total_death <span class="op">/</span><span class="st"> </span>total_confirmed, <span class="dv">2</span>),</span>
 <span id="cb4-7"><a href="#cb4-7"></a>                <span class="dt">recovery_rate =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>total_recovered <span class="op">/</span><span class="st"> </span>total_confirmed, <span class="dv">2</span>)) <span class="op">%&gt;%</span></span>
@@ -224,28 +237,42 @@
 <div id="separating-between-switzerland-and-principality-of-liechtenstein" class="section level3">
 <h3 class="hasAnchor">
 <a href="#separating-between-switzerland-and-principality-of-liechtenstein" class="anchor"></a>Separating between Switzerland and Principality of Liechtenstein</h3>
-<p>The raw data include both Switzerland and the Principality of Liechtenstein. Separating the data by country can be done by using the <code>canton</code> field:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>switzerland &lt;-<span class="st"> </span>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(canton <span class="op">!=</span><span class="st"> "FL"</span>)</span>
+<p>The raw data include both Switzerland and the Principality of Liechtenstein. Separating the data by country can be done by using the <code>location</code> field:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>switzerland &lt;-<span class="st"> </span>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(location <span class="op">!=</span><span class="st"> "FL"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(switzerland)</span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt;         date canton            type cases gn_a1_code</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; 1 2020-02-25     GE    total_tested    72      CH.GE</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 2 2020-02-25     GE total_confirmed     0      CH.GE</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; 3 2020-02-25     GE        new_hosp    NA      CH.GE</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; 4 2020-02-25     GE    current_hosp     0      CH.GE</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; 5 2020-02-25     GE     current_icu     0      CH.GE</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 6 2020-02-25     GE    current_vent     0      CH.GE</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a></span>
-<span id="cb5-12"><a href="#cb5-12"></a>liechtenstein &lt;-<span class="st"> </span>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(canton <span class="op">==</span><span class="st"> "FL"</span>)</span>
-<span id="cb5-13"><a href="#cb5-13"></a></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(liechtenstein)</span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;         date canton            type cases gn_a1_code</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 1 2020-02-27     FL    total_tested     3       &lt;NA&gt;</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; 2 2020-02-27     FL total_confirmed    NA       &lt;NA&gt;</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; 3 2020-02-27     FL        new_hosp    NA       &lt;NA&gt;</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; 4 2020-02-27     FL    current_hosp    NA       &lt;NA&gt;</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; 5 2020-02-27     FL     current_icu    NA       &lt;NA&gt;</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; 6 2020-02-27     FL    current_vent    NA       &lt;NA&gt;</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt;         date location         location_type location_standardized</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; 1 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 2 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; 3 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; 4 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; 5 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 6 2020-02-25       GE Canton of Switzerland                 CH.GE</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;   location_standardized_type       data_type value</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; 1                 gn_a1_code    total_tested    72</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; 2                 gn_a1_code total_confirmed     0</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; 3                 gn_a1_code        new_hosp    NA</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; 4                 gn_a1_code    current_hosp     0</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 5                 gn_a1_code     current_icu     0</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; 6                 gn_a1_code    current_vent     0</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a></span>
+<span id="cb5-19"><a href="#cb5-19"></a>liechtenstein &lt;-<span class="st"> </span>covid19swiss <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(location <span class="op">==</span><span class="st"> "FL"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20"></a></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(liechtenstein)</span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt;         date location                 location_type location_standardized</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; 1 2020-02-27       FL Principality of Liechtenstein                  &lt;NA&gt;</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt; 2 2020-02-27       FL Principality of Liechtenstein                  &lt;NA&gt;</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt; 3 2020-02-27       FL Principality of Liechtenstein                  &lt;NA&gt;</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt; 4 2020-02-27       FL Principality of Liechtenstein                  &lt;NA&gt;</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt; 5 2020-02-27       FL Principality of Liechtenstein                  &lt;NA&gt;</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt; 6 2020-02-27       FL Principality of Liechtenstein                  &lt;NA&gt;</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt;   location_standardized_type       data_type value</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#&gt; 1                 gn_a1_code    total_tested     3</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#&gt; 2                 gn_a1_code total_confirmed    NA</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#&gt; 3                 gn_a1_code        new_hosp    NA</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#&gt; 4                 gn_a1_code    current_hosp    NA</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#&gt; 5                 gn_a1_code     current_icu    NA</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#&gt; 6                 gn_a1_code    current_vent    NA</span></span></code></pre></div>
 </div>
   </div>
 
