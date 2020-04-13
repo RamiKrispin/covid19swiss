@@ -7,7 +7,7 @@ test_that(desc = "Test the dates", {
 
 test_that(desc = "Test the structure", {
 
-  expect_equal(base::ncol(covid19swiss) == 5, TRUE)
+  expect_equal(base::ncol(covid19swiss) == 7, TRUE)
   expect_equal(base::nrow(covid19swiss) >= 6800, TRUE)
 
 
