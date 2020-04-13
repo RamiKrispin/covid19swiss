@@ -42,9 +42,9 @@ library(covid19swiss)
 library(dplyr)
 library(tidyr)
 
-swiss_wide <- covid19swiss %>% filter(canton != "FL", 
+swiss_wide <- covid19swiss %>% filter(location != "FL", 
                                       date == as.Date("2020-04-09")) %>%
-  pivot_wider(names_from = type, values_from = cases) 
+  pivot_wider(names_from = data_type, values_from = value) 
 
 head(swiss_wide)
 ```
@@ -75,10 +75,10 @@ head(swiss_map)
 
 Note that the `geometry` is remain in the subset data we created above (even that we did not include on the `select` function).
 
-Now, that we have both the canton data (`swiss_wide`) and geometry (`swiss_map`), we will merge the two using the `gn_a1_code` field as key:
+Now, that we have both the canton data (`swiss_wide`) and geometry (`swiss_map`), we will merge the two using the `gn_a1_code` and `location_standardized` as keys:
 
 ```{r}
-swiss_df <- swiss_map %>% left_join(swiss_wide, by = "gn_a1_code")
+swiss_df <- swiss_map %>% left_join(swiss_wide, by = c("gn_a1_code" = "location_standardized"))
 ```
 
 ### Choropleth maps with the mapview package

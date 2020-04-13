@@ -16,10 +16,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-
-```
-
 
 The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coronavirus COVID-19 (2019-nCoV) pandemic outbreak in Switzerland cantons and Principality of Liechtenstein (FL). 
 
@@ -28,13 +24,15 @@ The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coro
 The `covid19swiss` dataset includes the following fields:
 
 * `date` - the timestamp of the case, a `Date` object
-* `canton` - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
-* `type` - the type of case
-* `cases` - the number of cases corresponding to the date and case type fields
-* `gn_a1_code` - a canton index code for merging geometry data from the **rnaturalearth** package, available only for Switzerland cantons
+* `location` - the cantons of Switzerland and Principality of Liechtenstein (FL) abbreviation code
+* `location_type` - description of the location, either **Canton of Switzerland** or **the Principality of echtenstein**
+* `location_standardized` - a canton index code for merging geometry data from the **rnaturalearth** package, ailable only for Switzerland cantons
+* `location_standardized_type` - the name of code in the **rnaturalearth** package for Switzerland map
+* `data_type` - the type of case
+* `value` - the number of cases corresponding to the `date` and `data_type` fields
 
 
-Where the available `type` field includes the following cases:
+Where the available `data_type` field includes the following cases:
 
 * `total_tested` - number of tests performed as of the date
 * `total_confirmed` - number of positive cases as of the date
@@ -61,7 +59,7 @@ It is straightforward to transform the data into a wide format with the `pivot_w
 library(tidyr)
 
 covid19swiss_wide <- covid19swiss %>% 
-  pivot_wider(names_from = type, values_from = cases)
+  pivot_wider(names_from = data_type, values_from = value)
 
 head(covid19swiss_wide)
 ```
@@ -80,9 +78,9 @@ library(dplyr)
 
 covid19swiss %>%
   filter(date == as.Date("2020-04-10"),
-         type %in% c("total_confirmed", "total_recovered", "total_death")) %>%
-  select(canton, cases, type) %>%
-  pivot_wider(names_from = type, values_from = cases) %>%
+         data_type %in% c("total_confirmed", "total_recovered", "total_death")) %>%
+  select(location, value, data_type) %>%
+  pivot_wider(names_from = data_type, values_from = value) %>%
   arrange(-total_confirmed)
 ```
 
@@ -99,10 +97,10 @@ In the next example, we will filter the dataset for the Canton of Geneva and cal
 
 
 ```{r}
-covid19swiss %>% dplyr::filter(canton == "GE",
+covid19swiss %>% dplyr::filter(location == "GE",
                                date == as.Date("2020-04-10")) %>%
-  dplyr::select(type, cases) %>%
-  tidyr::pivot_wider(names_from = type, values_from = cases) %>%
+  dplyr::select(data_type, value) %>%
+  tidyr::pivot_wider(names_from = data_type, values_from = value) %>%
   dplyr::mutate(positive_tested = round(100 * total_confirmed / total_tested, 2),
                 death_rate = round(100 * total_death / total_confirmed, 2),
                 recovery_rate = round(100 * total_recovered / total_confirmed, 2)) %>%
@@ -114,14 +112,14 @@ Values are in precentage
 
 ### Separating between Switzerland and Principality of Liechtenstein
 
-The raw data include both Switzerland and the Principality of Liechtenstein. Separating the data by country can be done by using the `canton` field:
+The raw data include both Switzerland and the Principality of Liechtenstein. Separating the data by country can be done by using the `location` field:
 
 ```{r}
-switzerland <- covid19swiss %>% filter(canton != "FL")
+switzerland <- covid19swiss %>% filter(location != "FL")
 
 head(switzerland)
 
-liechtenstein <- covid19swiss %>% filter(canton == "FL")
+liechtenstein <- covid19swiss %>% filter(location == "FL")
 
 head(liechtenstein)
 ```
