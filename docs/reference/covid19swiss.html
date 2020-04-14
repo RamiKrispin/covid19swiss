@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">covid19swiss</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -147,8 +147,8 @@ The data includes the following fields:</p>
 <p>date - the timestamp of the case, a Date object</p>
 <p>location - the Cantons of Switzerland and the Principality of Liechtenstein (FL) abbreviation code</p>
 <p>location_type - description of the location, either Canton of Switzerland or the Principality of Liechtenstein</p>
-<p>location_standardized - a canton index code for merging geometry data from the rnaturalearth package, available only for Switzerland cantons</p>
-<p>location_standardized_type - the name of code in the rnaturalearth package for Switzerland map</p>
+<p>location_code - a canton index code for merging geometry data from the rnaturalearth package, available only for Switzerland cantons</p>
+<p>location_code_type - the name of code in the rnaturalearth package for Switzerland map</p>
 <p>data_type - the type of case</p>
 <p>value - the number of cases corresponding to the date and data_type fields</p>
     <p>Where the available data_type field includes the following cases:</p>
@@ -165,20 +165,20 @@ The data includes the following fields:</p>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>covid19swiss</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>covid19swiss</span>)</div><div class='output co'>#&gt;         date location         location_type location_standardized
-#&gt; 1 2020-02-25       GE Canton of Switzerland                 CH.GE
-#&gt; 2 2020-02-25       GE Canton of Switzerland                 CH.GE
-#&gt; 3 2020-02-25       GE Canton of Switzerland                 CH.GE
-#&gt; 4 2020-02-25       GE Canton of Switzerland                 CH.GE
-#&gt; 5 2020-02-25       GE Canton of Switzerland                 CH.GE
-#&gt; 6 2020-02-25       GE Canton of Switzerland                 CH.GE
-#&gt;   location_standardized_type       data_type value
-#&gt; 1                 gn_a1_code    total_tested    72
-#&gt; 2                 gn_a1_code total_confirmed     0
-#&gt; 3                 gn_a1_code        new_hosp    NA
-#&gt; 4                 gn_a1_code    current_hosp     0
-#&gt; 5                 gn_a1_code     current_icu     0
-#&gt; 6                 gn_a1_code    current_vent     0</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>covid19swiss</span>)</div><div class='output co'>#&gt;         date location         location_type location_code location_code_type
+#&gt; 1 2020-02-25       GE Canton of Switzerland         CH.GE         gn_a1_code
+#&gt; 2 2020-02-25       GE Canton of Switzerland         CH.GE         gn_a1_code
+#&gt; 3 2020-02-25       GE Canton of Switzerland         CH.GE         gn_a1_code
+#&gt; 4 2020-02-25       GE Canton of Switzerland         CH.GE         gn_a1_code
+#&gt; 5 2020-02-25       GE Canton of Switzerland         CH.GE         gn_a1_code
+#&gt; 6 2020-02-25       GE Canton of Switzerland         CH.GE         gn_a1_code
+#&gt;         data_type value
+#&gt; 1    total_tested    72
+#&gt; 2 total_confirmed     0
+#&gt; 3        new_hosp    NA
+#&gt; 4    current_hosp     0
+#&gt; 5     current_icu     0
+#&gt; 6    current_vent     0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
