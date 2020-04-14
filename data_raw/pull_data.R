@@ -43,9 +43,9 @@ covid19swiss <- df_raw %>%
   dplyr::left_join(swiss_map, by = "canton") %>%
   dplyr::mutate(location = canton,
                 location_type = ifelse(canton == "FL", "Principality of Liechtenstein", "Canton of Switzerland"),
-                location_standardized = gn_a1_code,
-                location_standardized_type = "gn_a1_code") %>%
-  dplyr::select(date, location, location_type, location_standardized, location_standardized_type, data_type, value) %>%
+                location_code = gn_a1_code,
+                location_code_type = "gn_a1_code") %>%
+  dplyr::select(date, location, location_type, location_code, location_code_type, data_type, value) %>%
   as.data.frame()
 head(covid19swiss)
 

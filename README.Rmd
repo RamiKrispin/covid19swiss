@@ -29,8 +29,8 @@ The covid19swiss R package provides a tidy format dataset of the 2019 Novel Coro
 * `date` - the timestamp of the case, a `Date` object
 * `location` - the **Cantons of Switzerland** and **the Principality of Liechtenstein** (FL) abbreviation code
 * `location_type` - description of the location, either **Canton of Switzerland** or **the Principality of echtenstein**
-* `location_standardized` - a canton index code for merging geometry data from the rnaturalearth package, ailable only for Switzerland cantons
-* `location_standardized_type` - the name of code in the **rnaturalearth** package for Switzerland map
+* `location_code` - a canton index code for merging geometry data from the rnaturalearth package, ailable only for Switzerland cantons
+* `location_code_type` - the name of code in the **rnaturalearth** package for Switzerland map
 * `data_type` - the type of case
 * `value` - the number of cases corresponding to the `date` and `data_type` fields
 

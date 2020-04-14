@@ -26,9 +26,9 @@ location - the Cantons of Switzerland and the Principality of Liechtenstein (FL)
 
 location_type - description of the location, either Canton of Switzerland or the Principality of Liechtenstein
 
-location_standardized - a canton index code for merging geometry data from the rnaturalearth package, available only for Switzerland cantons
+location_code - a canton index code for merging geometry data from the rnaturalearth package, available only for Switzerland cantons
 
-location_standardized_type - the name of code in the rnaturalearth package for Switzerland map
+location_code_type - the name of code in the rnaturalearth package for Switzerland map
 
 data_type - the type of case
 

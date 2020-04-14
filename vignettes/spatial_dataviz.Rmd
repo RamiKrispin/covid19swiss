@@ -75,10 +75,10 @@ head(swiss_map)
 
 Note that the `geometry` is remain in the subset data we created above (even that we did not include on the `select` function).
 
-Now, that we have both the canton data (`swiss_wide`) and geometry (`swiss_map`), we will merge the two using the `gn_a1_code` and `location_standardized` as keys:
+Now, that we have both the canton data (`swiss_wide`) and geometry (`swiss_map`), we will merge the two using the `gn_a1_code` and `location_code` as keys:
 
 ```{r}
-swiss_df <- swiss_map %>% left_join(swiss_wide, by = c("gn_a1_code" = "location_standardized"))
+swiss_df <- swiss_map %>% left_join(swiss_wide, by = c("gn_a1_code" = "location_code"))
 ```
 
 ### Choropleth maps with the mapview package
