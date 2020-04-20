@@ -7,16 +7,14 @@ files_list <- swiss_map <- df_raw <- NULL
 #-------------- Functions --------------
 `%>%` <- magrittr::`%>%`
 #-------------- Github list of files --------------
-# Required jq
-command <- 'curl "https://api.github.com/repos/openZH/covid_19/contents/fallzahlen_kanton_total_csv_v2?ref=master" | jq ".[].name"'
-
-files_list <- system(command = command, intern = TRUE)
+files_list <- read.csv("https://raw.githubusercontent.com/Covid19R/covid19swiss/master/csv/files_list.csv", stringsAsFactors = FALSE)
 if(is.null(files_list)){
-  stop("Could not find the files list")
-} else if(length(files_list) != 27){
-  stop("The number of files on the Github repo is not aligned with the expected (27)")
+  stop("The files_list is NULL")
+} else if(ncol(files_list) != 1){
+  stop("The number of the files_list table is not valid")
+} else if(nrow(files_list) != 27){
+  stop("The number of files on the files_list table is not valid")
 }
-
 #-------------- Pulling the map data --------------
 swiss_map <- rnaturalearth::ne_states(country = "Switzerland", returnclass = "sf") %>%
   dplyr::mutate(canton = substr(gn_a1_code, 4,5)) %>%
@@ -25,9 +23,12 @@ swiss_map <- rnaturalearth::ne_states(country = "Switzerland", returnclass = "sf
 swiss_map$geometry <- NULL
 swiss_map
 #-------------- Pulling the raw data --------------
-df_raw <- lapply(files_list, function(i){
-  print(i)
-  df <- read.csv(paste("https://raw.githubusercontent.com/openZH/covid_19/master/fallzahlen_kanton_total_csv_v2/", gsub('"', '', i), sep = ""), stringsAsFactors = FALSE)
+df_raw <- lapply(1:nrow(files_list), function(i){
+
+  f <- files_list$x[i]
+
+  print(f)
+  df <- read.csv(paste("https://raw.githubusercontent.com/openZH/covid_19/master/fallzahlen_kanton_total_csv_v2/", gsub('"', '', f), sep = ""), stringsAsFactors = FALSE)
   return(df)
 }) %>% dplyr::bind_rows()
 #-------------- Cleaning the data --------------
